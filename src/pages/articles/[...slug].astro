@@ -1,0 +1,57 @@
+---
+import { getEntry } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import Tags from "../../components/Tags.astro";
+import type { CollectionEntry } from "astro:content";
+import { formatDate } from "../../utils";
+import BackButton from "../../components/BackButton.astro";
+const { slug } = Astro.params;
+if (!slug) throw new Error("Slug is required");
+const blog: CollectionEntry<"blog"> = await getEntry("blog", slug);
+
+if (!blog) return Astro.redirect("/404");
+const { Content } = await blog.render();
+---
+
+<MainLayout>
+  <article class="article">
+    <BackButton />
+    <div class="intro">
+      <h1>{blog.data.title}</h1>
+      <p>Writen By {blog.data.author} on {formatDate(blog.data.pubDate)}</p>
+      <Tags tags={blog.data.tags} />
+      <img src={"/images/" + blog.data.image} alt={blog.data.title} />
+    </div>
+
+    <Content />
+  </article>
+</MainLayout>
+
+<style is:global>
+  .intro {
+    margin-bottom: 20px;
+  }
+  h1 {
+    font-size: 2rem;
+    font-weight: 800;
+  }
+  .article {
+    padding: 20px;
+  }
+  img {
+    display: block;
+    width: 90%;
+    margin-top: 10px;
+  }
+  .article h2 {
+    font-size: 1.4rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .article ul {
+    list-style: disc;
+    li {
+      margin-bottom: 5px;
+    }
+  }
+</style>

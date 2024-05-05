@@ -1,0 +1,61 @@
+---
+import MainLayout from "../../layouts/MainLayout.astro";
+const search: string | null = new URL(Astro.url).searchParams.get("search");
+if (!search) return Astro.redirect("/");
+
+import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
+import ArticleCard from "../../components/ArticleCard.astro";
+import BackButton from "../../components/BackButton.astro";
+import SearchArticle from "../../components/SearchArticle.astro";
+
+const allBlogs: CollectionEntry<"blog">[] = await getCollection("blog");
+
+const searchResults = allBlogs.filter((blog) => {
+  const titleMatch = blog!.data.title
+    .toLocaleLowerCase()
+    .includes(search.toLowerCase());
+  const bodyMatch = blog!.body
+    .toLocaleLowerCase()
+    .includes(search.toLowerCase());
+  const slugMatch = blog!.slug
+    .toLocaleLowerCase()
+    .includes(search.toLowerCase());
+
+  return titleMatch || bodyMatch || slugMatch;
+});
+---
+
+<MainLayout title="Search Result">
+  <header>
+    <BackButton />
+    <h2>Search Result <strong>{search}</strong></h2>
+  </header>
+
+  <SearchArticle />
+
+  <section class="articles">
+    <!-- Article Card -->
+    {
+      searchResults.length ? (
+        searchResults.map((article) => <ArticleCard article={article} />)
+      ) : (
+        <h2>No Result Found</h2>
+      )
+    }
+  </section>
+</MainLayout>
+
+<style>
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+  .articles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+  }
+</style>

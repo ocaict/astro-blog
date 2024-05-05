@@ -1,0 +1,38 @@
+---
+interface TagsProps {
+  tags: string[];
+}
+const { tags } = Astro.props as TagsProps;
+import { capitalize } from "../utils";
+---
+
+<div class="tags">
+  {
+    tags.map((tag) => (
+      <li>
+        <a href={`/articles/tag/${tag}`}>#{capitalize(tag)}</a>
+      </li>
+    ))
+  }
+</div>
+<style>
+  .tags {
+    display: flex;
+    margin-top: 10px;
+  }
+  .tags li {
+    list-style: none;
+    background-color: blue;
+    margin-right: 10px;
+    padding: 2px 5px;
+    border-radius: 10px;
+  }
+  .tags li:nth-child(odd) {
+    background-color: darkcyan;
+  }
+  .tags li a {
+    font-size: 1rem;
+
+    color: whitesmoke;
+  }
+</style>

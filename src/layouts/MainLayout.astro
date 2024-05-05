@@ -1,0 +1,39 @@
+---
+type Props = {
+  title?: string;
+};
+const { title = "Web Development and Training" } = Astro.props as Props;
+
+import { SITE_TITLE, SITE_DESCRIPTION } from "../constants";
+import NavBar from "../components/NavBar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="stylesheet" href="style.css" />
+    <title>{SITE_TITLE} | {title}</title>
+    <meta name="description" content={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <NavBar />
+    <main>
+      <slot />
+    </main>
+
+    <Footer />
+  </body>
+</html>
+
+<style>
+  main {
+    padding: 60px 20px;
+    min-height: calc(100vh - 200px);
+    max-width: 1024px;
+    margin: auto;
+  }
+</style>

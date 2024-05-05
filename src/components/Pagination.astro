@@ -1,0 +1,43 @@
+---
+interface Props {
+  currentPage: number;
+  totalPages: number;
+  disablePrevious: boolean;
+  disableNext: boolean;
+}
+const { currentPage, totalPages, disableNext, disablePrevious } = Astro.props;
+console.log(totalPages);
+---
+
+<div class="pagination">
+  <a
+    href={`/articles?page=${currentPage - 1}`}
+    class={disablePrevious && "disable"}>Previous</a
+  >
+  <a href={`/articles?page=${currentPage + 1}`} class={disableNext && "disable"}
+    >Next</a
+  >
+</div>
+
+<style>
+  .pagination {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  .pagination a {
+    background-color: lightblue;
+    padding: 5px 15px;
+    border-radius: 6px;
+    transition: all 0.3s ease-in;
+  }
+  .pagination a:hover {
+    background-color: rgb(150, 216, 238);
+  }
+  .disable {
+    pointer-events: none;
+    background-color: lightgray;
+    color: gray;
+    cursor: no-drop;
+  }
+</style>

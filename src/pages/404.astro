@@ -1,0 +1,36 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { Image } from "astro:assets";
+import NotFoundImage from "../images/404.jpg";
+---
+
+<MainLayout title="404 - Page Not Found">
+  <div class="wrapper">
+    <Image src={NotFoundImage} alt="Image Not Found" />
+    <h2>The content you are looking for is not found</h2>
+    <a href="/">Go Back to Homepage</a>
+  </div>
+</MainLayout>
+<style>
+  .wrapper {
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+  }
+
+  img {
+    height: 400px;
+    width: 400px;
+    margin: auto;
+    display: block;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+  }
+  a {
+    font-size: 1.2rem;
+    color: teal;
+  }
+</style>

@@ -1,25 +1,125 @@
 ---
-const name = "Oluegwu";
-import Header from "../components/header.astro";
-import MainLayout from "../components/layout.astro";
+import { getCollection } from "astro:content";
+import MainLayout from "../layouts/MainLayout.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+import SearchArticle from "../components/SearchArticle.astro";
+
+import type { CollectionEntry } from "astro:content";
+const allBlogs: CollectionEntry<"blog">[] = (await getCollection("blog")).sort(
+  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+    new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+const featuredBlog: CollectionEntry<"blog"> = allBlogs[0];
+
+import { formatDate } from "../utils";
 ---
 
-<Header />
-<MainLayout>
-  <div
-    class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-lg flex items-center space-x-4 mb-10"
-  >
-    <div class="shrink-0">
-      <img class="h-12 w-12" src="images/letter.png" alt="ChitChat Logo" />
+<MainLayout title="Stories, Tutorial and Latest News">
+  <header class="hero">
+    <div class="intro">
+      <h1>Articles, Stories & Tutorial for Tech People</h1>
+      <SearchArticle />
     </div>
-    <div>
-      <div class="text-xl font-medium text-black">ChitChat</div>
-      <p class="text-slate-500 p-3">You have a new message!</p>
+    <div
+      class="hero-card"
+      style={{
+        backgroundImage: `linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.834),
+        rgba(68, 0, 0, 0.767),
+        rgba(0, 0, 0, 0.834)
+      ),
+      url(./images/${featuredBlog.data.image});
+   `,
+      }}
+    >
+      <div class="content">
+        <a href={`/articles/${featuredBlog.slug}`}
+          ><h2>{featuredBlog.data.title}</h2></a
+        >
+        <p>{formatDate(featuredBlog.data.pubDate)}</p>
+        <div class="hero-tags">
+          {
+            featuredBlog.data.tags.map((tag) => (
+              <li>
+                <a href={`/articles/tag/${tag}`}>{tag}</a>
+              </li>
+            ))
+          }
+        </div>
+      </div>
     </div>
-  </div>
-  <h2
-    class="text-slate-100 text-center bg-slate-500 max-w-sm mx-auto rounded-lg"
-  >
-    Oca web Tech by {name}
-  </h2>
+  </header>
+
+  <section class="articles">
+    <!-- Article Card -->
+    {allBlogs.map((article) => <ArticleCard article={article} />)}
+  </section>
 </MainLayout>
+<style>
+  .hero {
+    margin-bottom: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    gap: 15px;
+  }
+
+  .hero .intro,
+  .hero .hero-card {
+    height: 250px;
+  }
+  .hero-card {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    border-radius: 15px;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+  }
+
+  .hero-card .content {
+    padding: 20px;
+    align-items: center;
+    h2 {
+      font-size: 1.5rem;
+    }
+    p {
+      font-size: 1rem;
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .hero-tags {
+      display: flex;
+      justify-content: center;
+
+      li {
+        list-style: none;
+        margin-right: 15px;
+        border: 1px solid orange;
+        border-radius: 15px;
+        padding: 5px 10px;
+      }
+    }
+  }
+
+  .intro h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+  .articles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+  }
+</style>

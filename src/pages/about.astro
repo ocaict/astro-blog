@@ -1,11 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <h2>About Us</h2>
-  </body>
-</html>
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import { formatDate } from "../utils";
+interface PostDataType {
+  id: number | string;
+  title: string;
+  body: string;
+  date: Date;
+  userId: number | string;
+}
+const posts: PostDataType[] = [
+  //...(await (await fetch("http://localhost:3600/posts")).json()),
+];
+---
+
+<MainLayout title="About Us">
+  <h2>About Us</h2>
+
+  {
+    posts.map((post) => (
+      <div class="post">
+        <h3>{post.title}</h3>
+        <p>{post.body}</p>
+        <p class="date">
+          Authored by{" "}
+          <span class="author">
+            <a href="/userPost">{post.userId}</a>
+          </span>{" "}
+          on {formatDate(post.date)}
+        </p>
+      </div>
+    ))
+  }
+</MainLayout>
+
+<style>
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+  }
+  .post {
+    margin-bottom: 20px;
+    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 10px;
+    h3 {
+      font-size: 1.3rem;
+      font-weight: bold;
+    }
+    .date {
+      font-size: 0.8rem;
+      font-style: italic;
+    }
+  }
+</style>

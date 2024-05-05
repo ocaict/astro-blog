@@ -1,0 +1,43 @@
+<form class="search-container" action="/articles/search">
+  <input
+    type="text"
+    name="search"
+    id="search"
+    placeholder="Search Articles...."
+  />
+  <button type="submit">
+    <img src="/images/search.png" alt="Search Article" /></button
+  >
+</form>
+<style>
+  .search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    position: relative;
+
+    height: 36px;
+  }
+  .search-container input {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    padding: 5px 10px;
+    display: block;
+    flex: 1;
+    outline: none;
+    height: 100%;
+    border-radius: 5px;
+  }
+  .search-container input::placeholder {
+    opacity: 0.5;
+  }
+  .search-container img {
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    position: absolute;
+    right: -15px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+</style>

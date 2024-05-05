@@ -1,0 +1,44 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../../../layouts/MainLayout.astro";
+import ArticleCard from "../../../components/ArticleCard.astro";
+
+import type { CollectionEntry } from "astro:content";
+import { capitalize } from "../../../utils";
+import BackButton from "../../../components/BackButton.astro";
+const allBlogs: CollectionEntry<"blog">[] = (await getCollection("blog")).sort(
+  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+    new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+const { tag } = Astro.params;
+if (!tag) throw new Error("Tag is required");
+
+const tagArticles = allBlogs.filter((blog) => {
+  return blog.data.tags.includes(tag);
+});
+---
+
+<MainLayout title="Stories, Tutorial and Latest News">
+  <header>
+    <BackButton />
+    <h2>#{capitalize(tag)}</h2>
+  </header>
+
+  <section class="articles">
+    <!-- Article Card -->
+    {tagArticles.map((article) => <ArticleCard article={article} />)}
+  </section>
+</MainLayout>
+
+<style>
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+  .articles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+  }
+</style>

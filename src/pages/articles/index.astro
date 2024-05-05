@@ -1,0 +1,55 @@
+---
+import { getCollection } from "astro:content";
+import MainLayout from "../../layouts/MainLayout.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+
+import type { CollectionEntry } from "astro:content";
+import SearchArticle from "../../components/SearchArticle.astro";
+import Pagination from "../../components/Pagination.astro";
+import { ARTICLES_PER_PAGE } from "../../constants";
+
+const allBlogs: CollectionEntry<"blog">[] = (await getCollection("blog")).sort(
+  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+    new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+);
+
+const currentPage: number | null = +Astro.url.searchParams.get("page")! || 1;
+
+const totalPages: number = Math.ceil(allBlogs.length / ARTICLES_PER_PAGE);
+
+const blogsPerPage: CollectionEntry<"blog">[] = allBlogs.slice(
+  (currentPage - 1) * ARTICLES_PER_PAGE,
+  currentPage * ARTICLES_PER_PAGE
+);
+---
+
+<MainLayout title="Stories, Tutorial and Latest News">
+  <header>
+    <h2>Articles</h2>
+  </header>
+  <SearchArticle />
+  <section class="articles">
+    <!-- Article Card -->
+    {blogsPerPage.map((article) => <ArticleCard article={article} />)}
+  </section>
+  <Pagination
+    currentPage={currentPage}
+    totalPages={totalPages}
+    disablePrevious={currentPage === 1}
+    disableNext={currentPage === totalPages}
+  />
+</MainLayout>
+
+<style>
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+  .articles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+    margin-top: 10px;
+  }
+</style>

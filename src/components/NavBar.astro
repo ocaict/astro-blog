@@ -1,11 +1,11 @@
 <header>
   <div class="wrapper">
-    <a href="/" class="logo"><h1>Ocawebtech</h1></a>
+    <a href="/" class="logo"><h1 class="text-2xl">OcaWebTech</h1></a>
     <nav>
       <ul>
         <li><a href="/">Home</a></li>
-        <li><a href="/about">About Us</a></li>
-        <li><a href="/services">Services</a></li>
+        <li><a href="/articles">Articles</a></li>
+        <li><a href="/about">About</a></li>
       </ul>
     </nav>
   </div>
@@ -13,7 +13,7 @@
 
 <style>
   header {
-    background-color: darkcyan;
+    background-color: #333;
     color: #f0f0f0;
     padding: 30px 60px;
   }
@@ -28,8 +28,12 @@
     ul {
       display: flex;
       li a {
-        background-color: teal;
         margin-right: 10px;
+        font-size: 1rem;
+        &:hover {
+          opacity: 0.6;
+          transition: color 0.3s linear;
+        }
       }
     }
   }
