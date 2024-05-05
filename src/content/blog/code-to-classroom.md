@@ -1,6 +1,6 @@
 ---
 title: "From Code to Classroom: A Web Developer's Journey to Training"
-pubDate: 2024-05-05
+pubDate: 2024-04-05
 author: "Oluegwu Chigozie"
 image: "image6.jpg"
 tags: ["webdev", "education", "career"]

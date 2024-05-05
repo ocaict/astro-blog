@@ -1,9 +1,9 @@
 ---
 title: "The Best Software for Developers in 2024"
-pubDate: 2024-05-05
+pubDate: 2024-03-05
 author: "Oluegwu Chigozie"
 image: "image3.jpg"
-tags: ["Tech", "software", "developer"]
+tags: ["tech", "software"]
 slug: "best-software-for-developers-2024"
 ---
 

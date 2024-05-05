@@ -5,10 +5,12 @@ import ArticleCard from "../components/ArticleCard.astro";
 import SearchArticle from "../components/SearchArticle.astro";
 
 import type { CollectionEntry } from "astro:content";
-const allBlogs: CollectionEntry<"blog">[] = (await getCollection("blog")).sort(
-  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
-    new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
-);
+const allBlogs: CollectionEntry<"blog">[] = (await getCollection("blog"))
+  .sort(
+    (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
+      new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime()
+  )
+  .slice(0, 7);
 const featuredBlog: CollectionEntry<"blog"> = allBlogs[0];
 
 import { formatDate } from "../utils";
@@ -53,7 +55,7 @@ import { formatDate } from "../utils";
 
   <section class="articles">
     <!-- Article Card -->
-    {allBlogs.map((article) => <ArticleCard article={article} />)}
+    {allBlogs.slice(1).map((article) => <ArticleCard article={article} />)}
   </section>
 </MainLayout>
 <style>

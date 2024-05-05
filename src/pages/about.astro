@@ -1,55 +1,95 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
 import { formatDate } from "../utils";
-interface PostDataType {
-  id: number | string;
-  title: string;
-  body: string;
-  date: Date;
-  userId: number | string;
-}
-const posts: PostDataType[] = [
-  //...(await (await fetch("http://localhost:3600/posts")).json()),
-];
 ---
 
 <MainLayout title="About Us">
-  <h2>About Us</h2>
+  <h2>About Ocawebtech</h2>
 
-  {
-    posts.map((post) => (
-      <div class="post">
-        <h3>{post.title}</h3>
-        <p>{post.body}</p>
-        <p class="date">
-          Authored by{" "}
-          <span class="author">
-            <a href="/userPost">{post.userId}</a>
-          </span>{" "}
-          on {formatDate(post.date)}
+  <section>
+    <div class="about-hero">
+      <img src="/images/image2.jpg" alt="About Us Image" />
+      <div class="content">
+        <h3>Who we are</h3>
+        <p>
+          At Ocawebtech, we are passionate about helping individuals unlock
+          their potential and achieve their goals through the power of online
+          education. We provide a comprehensive library of high-quality online
+          courses and downloadable digital resources across various in-demand
+          categories.
         </p>
       </div>
-    ))
-  }
+    </div>
+
+    <h3>Our Team</h3>
+    <div class="team-container">
+      <div class="team">
+        <img src="images/team1.jpg" alt="Team One" />
+        <div class="text">
+          <h4>John Doe</h4>
+          <p>Founder & Instructor</p>
+        </div>
+      </div>
+      <div class="team">
+        <img src="images/team2.jpg" alt="Team One" />
+        <div class="text">
+          <h4>John Doe</h4>
+          <p>Founder & Instructor</p>
+        </div>
+      </div>
+      <div class="team">
+        <img src="images/team3.jpg" alt="Team One" />
+        <div class="text">
+          <h4>John Doe</h4>
+          <p>Founder & Instructor</p>
+        </div>
+      </div>
+    </div>
+  </section>
 </MainLayout>
 
 <style>
   h2 {
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     font-weight: 800;
+    text-align: left;
+    margin-bottom: 10px;
   }
-  .post {
+  .about-hero {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 15px;
     margin-bottom: 20px;
-    box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.4);
-    padding: 20px;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  p {
+    line-height: 1.6;
+  }
+  .team-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  .team {
     border-radius: 10px;
-    h3 {
-      font-size: 1.3rem;
-      font-weight: bold;
-    }
-    .date {
-      font-size: 0.8rem;
-      font-style: italic;
-    }
+    overflow: hidden;
+    box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.1);
+  }
+  .team .text {
+    padding: 10px 15px;
+    padding-bottom: 30px;
+  }
+  .team h4 {
+    font-weight: bold;
+  }
+  .team img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
   }
 </style>

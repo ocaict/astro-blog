@@ -3,7 +3,7 @@ title: "Team Teamwork And Collaboration Techniques"
 pubDate: 2024-05-03
 author: "Oluegwu Chigozie"
 image: "image2.jpg"
-tags: ["softskill", "education"]
+tags: ["soft skills", "education"]
 slug: "teamwork-and-collaboration-techniques"
 ---
 

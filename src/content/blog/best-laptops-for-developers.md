@@ -3,7 +3,7 @@ title: "The Best Laptops for Developers in 2024"
 pubDate: 2024-05-05
 author: "Oluegwu Chigozie"
 image: "image1.jpg"
-tags: ["Tech", "hardware", "developer"]
+tags: ["tech", "hardware"]
 slug: "best-laptops-for-developers-2024"
 ---
 
